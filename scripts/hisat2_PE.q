@@ -42,15 +42,19 @@ echo "HISAT2 version: "$(hisat2 --version)
 echo "samtools version: "$(samtools --version)
 echo "Processing file: "${queries[$SLURM_ARRAY_TASK_ID]}
 
-hisat2 -p ${numThreads} --rna-strandness ${rnaStrandness} --no-softclip -x ${hisatIdxDir}/${hisatIdx} \
--1 ${queries[$SLURM_ARRAY_TASK_ID]}_R1_paired.fastq.gz -2 ${queries[$SLURM_ARRAY_TASK_ID]}_R2_paired.fastq.gz \
+hisat2 --no-softclip \
+--rna-strandness ${rnaStrandness} \
+-p ${numThreads} \
+-x ${hisatIdxDir}/${hisatIdx} \
+-1 ${inDir}/${queries[$SLURM_ARRAY_TASK_ID]}_R1_paired.fastq.gz \
+-2 ${inDir}/${queries[$SLURM_ARRAY_TASK_ID]}_R2_paired.fastq.gz \
 | samtools view -q 10 -Sb - \
 | samtools sort -@ ${numThreads} - -o ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]%_paired.fastq.gz}.uniq.bam
 
 # Create a bai index file for upload to UCSC browser
 samtools index ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]%_paired.fastq.gz}.uniq.bam
 
-echo $(date +"[%b %d %H:%M:%S] Done")
+echo $(date +"[%b %d %H:%M:%S] Done!")
 
 ## Explanation of arguments:
 # '-p <int>' - number of threads
