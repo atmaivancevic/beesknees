@@ -28,7 +28,7 @@ trimExe=/opt/trimmomatic/0.36/trimmomatic-0.36.jar
 numCpus=8
 
 # set query files
-queries=($(ls $inDir/*.fastq.gz | xargs -n 1 basename | sed 's/_R1_001.fastq.gz//g' | sed 's/_R2_001.fastq.gz//g' | uniq))
+queries=($(ls $inDir/*.fastq.gz | xargs -n 1 basename | sed 's/_R1.fastq.gz//g' | sed 's/_R2.fastq.gz//g' | uniq))
 
 # run the thing
 pwd; hostname; date
