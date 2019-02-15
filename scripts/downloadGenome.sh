@@ -109,7 +109,11 @@ wget 'ftp://ftp.ensemblgenomes.org/pub/metazoa/release-42/gff3/apis_mellifera/Ap
 # Group15	10167229
 # Group16	7207165
 
-# Yay they're the same! Will need to remember to prefix the gene gtf with "Group"
+# Yay they're the same! 
+
+# need to prefix the gene gtf with "Group" to make the names match the fasta chr files
+cat Apis_mellifera.Amel_4.5.42.chr.gtf | awk '{print "Group" $0}' | sed 's/Group#/#/g' | head > Amel_4.5.annotation.gtf 
+# use Amel_4.5.annotation.gtf  for featureCounts etc.
 
 # download repeats
 
