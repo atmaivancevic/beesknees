@@ -119,6 +119,9 @@ cat Apis_mellifera.Amel_4.5.42.chr.gtf | awk '{print "Group" $0}' | sed 's/Group
 # https://chuonglab.colorado.edu/wiki/index.php?title=Downloading_gene_annotations
 cat Amel_4.5.annotation.gtf | awk 'OFS="\t" {if ($3=="gene") {print $1,$4-1,$5,$10,0,$7}}' | tr -d '";' | grep -v MT > Amel_4.5.ensGene.bed
 
+# make a "TSS" file, useful for finding the elements close to the 5' end of the gene
+collapseBedToTSS.py -i Amel_4.5.ensGene.bed > Amel_4.5.ensGene.tss.bed
+
 # download repeats
 
 wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/002/195/GCA_000002195.1_Amel_4.5/GCA_000002195.1_Amel_4.5_rm.out.gz'
@@ -129,6 +132,8 @@ wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/002/195/GCA_000002195.1_Ame
 # .
 # ├── annotations
 # │   ├── Amel_4.5.annotation.gtf
+# │   ├── Amel_4.5.ensGene.bed
+# │   ├── Amel_4.5.ensGene.tss.bed
 # │   ├── Apis_mellifera.Amel_4.5.42.chr.gff3
 # │   └── Apis_mellifera.Amel_4.5.42.chr.gtf
 # ├── fa
@@ -192,7 +197,7 @@ wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/002/195/GCA_000002195.1_Ame
 # └── repeats
 #     └── GCA_000002195.1_Amel_4.5_rm.out
 
-# 11 directories, 53 files
+# 11 directories, 55 files
 
 ###############################################################################
 
@@ -205,26 +210,28 @@ wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/003/254/395/GCF_003254395.2_Ame
 
 # genes sourced from:
 wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/Apis_mellifera/GFF/ref_Amel_HAv3.1_top_level.gff3.gz'
+gunzip ref_Amel_HAv3.1_top_level.gff3.gz
+cat ref_Amel_HAv3.1_top_level.gff3 | sed 's/NC_037638.1/Group1/g' | sed 's/NC_037639.1/Group2/g' | sed 's/NC_037640.1/Group3/g' | sed 's/NC_037641.1/Group4/g' | sed 's/NC_037642.1/Group5/g' | sed 's/NC_037643.1/Group6/g' | sed 's/NC_037644.1/Group7/g' | sed 's/NC_037645.1/Group8/g' | sed 's/NC_037646.1/Group9/g' | sed 's/NC_037647.1/Group10/g' | sed 's/NC_037648.1/Group11/g' | sed 's/NC_037649.1/Group12/g' | sed 's/NC_037650.1/Group13/g' | sed 's/NC_037651.1/Group14/g' | sed 's/NC_037652.1/Group15/g' | sed 's/NC_037653.1/Group16/g' > Amel_HAv3.1.annotation.gtf
 
 # as above, check that the chromosome sizes match in the gene files and full chr sizes file
 
-# fiji-1:/Users/CL_Shared/db/genomes/Amel_HAv3.1/genes$ cat ref_Amel_HAv3.1_top_level.gff3 | grep Name=LG
-# NC_037638.1	RefSeq	region	1	27754200	.	+	.	ID=id0;Dbxref=taxon:7460;Name=LG1;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG1;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037639.1	RefSeq	region	1	16089512	.	+	.	ID=id33275;Dbxref=taxon:7460;Name=LG2;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG2;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037640.1	RefSeq	region	1	13619445	.	+	.	ID=id57466;Dbxref=taxon:7460;Name=LG3;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG3;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037641.1	RefSeq	region	1	13404451	.	+	.	ID=id78108;Dbxref=taxon:7460;Name=LG4;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG4;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037642.1	RefSeq	region	1	13896941	.	+	.	ID=id97092;Dbxref=taxon:7460;Name=LG5;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG5;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037643.1	RefSeq	region	1	17789102	.	+	.	ID=id112983;Dbxref=taxon:7460;Name=LG6;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG6;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037644.1	RefSeq	region	1	14198698	.	+	.	ID=id129022;Dbxref=taxon:7460;Name=LG7;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG7;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037645.1	RefSeq	region	1	12717210	.	+	.	ID=id144059;Dbxref=taxon:7460;Name=LG8;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG8;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037646.1	RefSeq	region	1	12354651	.	+	.	ID=id164757;Dbxref=taxon:7460;Name=LG9;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG9;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037647.1	RefSeq	region	1	12360052	.	+	.	ID=id178189;Dbxref=taxon:7460;Name=LG10;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG10;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037648.1	RefSeq	region	1	16352600	.	+	.	ID=id191710;Dbxref=taxon:7460;Name=LG11;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG11;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037649.1	RefSeq	region	1	11514234	.	+	.	ID=id213107;Dbxref=taxon:7460;Name=LG12;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG12;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037650.1	RefSeq	region	1	11279722	.	+	.	ID=id224682;Dbxref=taxon:7460;Name=LG13;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG13;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037651.1	RefSeq	region	1	10670842	.	+	.	ID=id233955;Dbxref=taxon:7460;Name=LG14;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG14;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037652.1	RefSeq	region	1	9534514	.	+	.	ID=id246717;Dbxref=taxon:7460;Name=LG15;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG15;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
-# NC_037653.1	RefSeq	region	1	7238532	.	+	.	ID=id259304;Dbxref=taxon:7460;Name=LG16;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG16;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# fiji-1:/Users/CL_Shared/db/genomes/Amel_HAv3.1/annotations$ cat Amel_HAv3.1.annotation.gff3 | grep Name=LG
+# Group1	RefSeq	region	1	27754200	.	+	.	ID=id0;Dbxref=taxon:7460;Name=LG1;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG1;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group2	RefSeq	region	1	16089512	.	+	.	ID=id33275;Dbxref=taxon:7460;Name=LG2;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG2;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group3	RefSeq	region	1	13619445	.	+	.	ID=id57466;Dbxref=taxon:7460;Name=LG3;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG3;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group4	RefSeq	region	1	13404451	.	+	.	ID=id78108;Dbxref=taxon:7460;Name=LG4;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG4;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group5	RefSeq	region	1	13896941	.	+	.	ID=id97092;Dbxref=taxon:7460;Name=LG5;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG5;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group6	RefSeq	region	1	17789102	.	+	.	ID=id112983;Dbxref=taxon:7460;Name=LG6;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG6;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group7	RefSeq	region	1	14198698	.	+	.	ID=id129022;Dbxref=taxon:7460;Name=LG7;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG7;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group8	RefSeq	region	1	12717210	.	+	.	ID=id144059;Dbxref=taxon:7460;Name=LG8;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG8;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group9	RefSeq	region	1	12354651	.	+	.	ID=id164757;Dbxref=taxon:7460;Name=LG9;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG9;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group10	RefSeq	region	1	12360052	.	+	.	ID=id178189;Dbxref=taxon:7460;Name=LG10;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG10;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group11	RefSeq	region	1	16352600	.	+	.	ID=id191710;Dbxref=taxon:7460;Name=LG11;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG11;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group12	RefSeq	region	1	11514234	.	+	.	ID=id213107;Dbxref=taxon:7460;Name=LG12;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG12;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group13	RefSeq	region	1	11279722	.	+	.	ID=id224682;Dbxref=taxon:7460;Name=LG13;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG13;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group14	RefSeq	region	1	10670842	.	+	.	ID=id233955;Dbxref=taxon:7460;Name=LG14;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG14;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group15	RefSeq	region	1	9534514	.	+	.	ID=id246717;Dbxref=taxon:7460;Name=LG15;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG15;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
+# Group16	RefSeq	region	1	7238532	.	+	.	ID=id259304;Dbxref=taxon:7460;Name=LG16;collection-date=2003;country=USA;gbkey=Src;genome=chromosome;isolation-source=bee hive;linkage-group=LG16;mol_type=genomic DNA;sex=male;strain=DH4;tissue-type=whole body
 
 # fiji-1:/Users/CL_Shared/db/genomes/Amel_HAv3.1/genes$ cat ../fa/Amel_HAv3.1.chrom.sizes 
 # Group1	27754200
@@ -251,6 +258,7 @@ wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/Apis_mellifera/GFF/ref_Amel_HAv3.1_top_
 # fiji-1:/Users/CL_Shared/db/genomes/Amel_HAv3.1$ tree
 # .
 # ├── annotations
+# │   ├── Amel_HAv3.1.annotation.gff3
 # │   └── ref_Amel_HAv3.1_top_level.gff3
 # ├── fa
 # │   ├── Amel_HAv3.1.chrom.sizes
@@ -325,5 +333,5 @@ wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/Apis_mellifera/GFF/ref_Amel_HAv3.1_top_
 # └── repeats
 #     └── GCF_003254395.2_Amel_HAv3.1_rm.out
 
-# 12 directories, 62 files
+# 12 directories, 63 files
 
