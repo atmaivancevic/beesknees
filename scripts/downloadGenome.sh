@@ -115,6 +115,10 @@ wget 'ftp://ftp.ensemblgenomes.org/pub/metazoa/release-42/gff3/apis_mellifera/Ap
 cat Apis_mellifera.Amel_4.5.42.chr.gtf | awk '{print "Group" $0}' | sed 's/Group#/#/g' | head > Amel_4.5.annotation.gtf 
 # use Amel_4.5.annotation.gtf  for featureCounts etc.
 
+# make a gene bed file, as recommended on CL-Wiki
+# https://chuonglab.colorado.edu/wiki/index.php?title=Downloading_gene_annotations
+cat Amel_4.5.annotation.gtf | awk 'OFS="\t" {if ($3=="gene") {print $1,$4-1,$5,$10,0,$7}}' | tr -d '";' | grep -v MT > Amel_4.5.ensGene.bed
+
 # download repeats
 
 wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/002/195/GCA_000002195.1_Amel_4.5/GCA_000002195.1_Amel_4.5_rm.out.gz'
