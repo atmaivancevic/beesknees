@@ -15,13 +15,13 @@
 
 # Job name and output
 #SBATCH -J featureCounts
-#SBATCH -o /Users/%u/slurmOut/slurm-%A_%a.out
-#SBATCH -e /Users/%u/slurmErr/slurm-%A_%a.err
+#SBATCH -o /Users/%u/slurmOut/slurm-%j.out
+#SBATCH -e /Users/%u/slurmErr/slurm-%j.err
 
 # Email notifications 
 #SBATCH --mail-type=END                                         
 #SBATCH --mail-type=FAIL                                        
-#SBATCH --mail-user="%u"@colorado.edu
+#SBATCH --mail-user=atma.ivancevic@colorado.edu
 
 # load modules
 module load subread
