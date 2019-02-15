@@ -244,8 +244,10 @@ wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/Apis_mellifera/GFF/ref_Amel_HAv3.1_top_
 
 # final tree:
 
-# /Users/CL_Shared/db/genomes/Amel_HAv3.1
+# fiji-1:/Users/CL_Shared/db/genomes/Amel_HAv3.1$ tree
 # .
+# ├── annotations
+# │   └── ref_Amel_HAv3.1_top_level.gff3
 # ├── fa
 # │   ├── Amel_HAv3.1.chrom.sizes
 # │   └── Amel_HAv3.1.main.fa
@@ -266,56 +268,58 @@ wget 'ftp://ftp.ncbi.nlm.nih.gov/genomes/Apis_mellifera/GFF/ref_Amel_HAv3.1_top_
 # │       ├── Amel_HAv3.1.main.6.ht2
 # │       ├── Amel_HAv3.1.main.7.ht2
 # │       └── Amel_HAv3.1.main.8.ht2
-# └── raw
-#     └── full_assembly
-#         ├── assembled_chromosomes
-#         │   ├── chrLG10.fna.gz
-#         │   ├── chrLG11.fna.gz
-#         │   ├── chrLG12.fna.gz
-#         │   ├── chrLG13.fna.gz
-#         │   ├── chrLG14.fna.gz
-#         │   ├── chrLG15.fna.gz
-#         │   ├── chrLG16.fna.gz
-#         │   ├── chrLG1.fna.gz
-#         │   ├── chrLG2.fna.gz
-#         │   ├── chrLG3.fna.gz
-#         │   ├── chrLG4.fna.gz
-#         │   ├── chrLG5.fna.gz
-#         │   ├── chrLG6.fna.gz
-#         │   ├── chrLG7.fna.gz
-#         │   ├── chrLG8.fna.gz
-#         │   └── chrLG9.fna.gz
-#         ├── placed_scaffolds
-#         │   ├── chrLG10.placed.scaf.fna.gz
-#         │   ├── chrLG11.placed.scaf.fna.gz
-#         │   ├── chrLG12.placed.scaf.fna.gz
-#         │   ├── chrLG13.placed.scaf.fna.gz
-#         │   ├── chrLG14.placed.scaf.fna.gz
-#         │   ├── chrLG15.placed.scaf.fna.gz
-#         │   ├── chrLG16.placed.scaf.fna.gz
-#         │   ├── chrLG1.placed.scaf.fna.gz
-#         │   ├── chrLG2.placed.scaf.fna.gz
-#         │   ├── chrLG3.placed.scaf.fna.gz
-#         │   ├── chrLG4.placed.scaf.fna.gz
-#         │   ├── chrLG5.placed.scaf.fna.gz
-#         │   ├── chrLG6.placed.scaf.fna.gz
-#         │   ├── chrLG7.placed.scaf.fna.gz
-#         │   ├── chrLG8.placed.scaf.fna.gz
-#         │   └── chrLG9.placed.scaf.fna.gz
-#         ├── unlocalized_scaffolds
-#         │   ├── chrLG10.unlocalized.scaf.fna.gz
-#         │   ├── chrLG11.unlocalized.scaf.fna.gz
-#         │   ├── chrLG12.unlocalized.scaf.fna.gz
-#         │   ├── chrLG14.unlocalized.scaf.fna.gz
-#         │   ├── chrLG15.unlocalized.scaf.fna.gz
-#         │   ├── chrLG2.unlocalized.scaf.fna.gz
-#         │   ├── chrLG5.unlocalized.scaf.fna.gz
-#         │   ├── chrLG6.unlocalized.scaf.fna.gz
-#         │   ├── chrLG7.unlocalized.scaf.fna.gz
-#         │   ├── chrLG8.unlocalized.scaf.fna.gz
-#         │   └── chrLG9.unlocalized.scaf.fna.gz
-#         └── unplaced_scaffolds
-#             └── unplaced.scaf.fna.gz
+# ├── raw
+# │   └── full_assembly
+# │       ├── assembled_chromosomes
+# │       │   ├── chrLG10.fna.gz
+# │       │   ├── chrLG11.fna.gz
+# │       │   ├── chrLG12.fna.gz
+# │       │   ├── chrLG13.fna.gz
+# │       │   ├── chrLG14.fna.gz
+# │       │   ├── chrLG15.fna.gz
+# │       │   ├── chrLG16.fna.gz
+# │       │   ├── chrLG1.fna.gz
+# │       │   ├── chrLG2.fna.gz
+# │       │   ├── chrLG3.fna.gz
+# │       │   ├── chrLG4.fna.gz
+# │       │   ├── chrLG5.fna.gz
+# │       │   ├── chrLG6.fna.gz
+# │       │   ├── chrLG7.fna.gz
+# │       │   ├── chrLG8.fna.gz
+# │       │   └── chrLG9.fna.gz
+# │       ├── placed_scaffolds
+# │       │   ├── chrLG10.placed.scaf.fna.gz
+# │       │   ├── chrLG11.placed.scaf.fna.gz
+# │       │   ├── chrLG12.placed.scaf.fna.gz
+# │       │   ├── chrLG13.placed.scaf.fna.gz
+# │       │   ├── chrLG14.placed.scaf.fna.gz
+# │       │   ├── chrLG15.placed.scaf.fna.gz
+# │       │   ├── chrLG16.placed.scaf.fna.gz
+# │       │   ├── chrLG1.placed.scaf.fna.gz
+# │       │   ├── chrLG2.placed.scaf.fna.gz
+# │       │   ├── chrLG3.placed.scaf.fna.gz
+# │       │   ├── chrLG4.placed.scaf.fna.gz
+# │       │   ├── chrLG5.placed.scaf.fna.gz
+# │       │   ├── chrLG6.placed.scaf.fna.gz
+# │       │   ├── chrLG7.placed.scaf.fna.gz
+# │       │   ├── chrLG8.placed.scaf.fna.gz
+# │       │   └── chrLG9.placed.scaf.fna.gz
+# │       ├── unlocalized_scaffolds
+# │       │   ├── chrLG10.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG11.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG12.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG14.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG15.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG2.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG5.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG6.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG7.unlocalized.scaf.fna.gz
+# │       │   ├── chrLG8.unlocalized.scaf.fna.gz
+# │       │   └── chrLG9.unlocalized.scaf.fna.gz
+# │       └── unplaced_scaffolds
+# │           └── unplaced.scaf.fna.gz
+# └── repeats
+#     └── GCF_003254395.2_Amel_HAv3.1_rm.out
 
-# 10 directories, 60 files
+# 12 directories, 62 files
 
