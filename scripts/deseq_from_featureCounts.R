@@ -194,3 +194,9 @@ write.csv(head_vs_body_ordered_table, file="/Users/ativ2716/repos/beesknees/proj
 # if you want to zoom into a certain gene, deseq also provides a plotCounts function
 # e.g. for gene GB43248 (identified as DE in the head vs body comparison):
 plotCounts(dds, gene="GB43248", intgroup="condition")
+
+# next step for bees:
+# gene ontology analysis (e.g. using CL_Wiki entry for biomart)
+# pathway analysis (beebase?) or using drosophila ortholog genes 
+# look at what other bee papers did for help
+
