@@ -9,7 +9,7 @@
 ## General settings
 #SBATCH -p short
 #SBATCH -N 1
-#SBATCH -n 8
+#SBATCH -c 8
 #SBATCH --time=4:00:00
 #SBATCH --mem=16GB
 
